@@ -61,6 +61,14 @@ rights_clauses["peer"] = ("rights, privileges, pre-eminences, immunities "+
 rights_clauses["baronet"] = ("rights, privileges, precedences and "+
                              "advantages")
 
+degree_clauses = dict()
+degree_clauses["duke"] = "a duke"
+degree_clauses["marquess"] = "a marquess"
+degree_clauses["earl"] = "an earl"
+degree_clauses["viscount"] = "a viscount"
+degree_clauses["baron"] = "a baron"
+degree_clauses["baronet"] = "a baronet"
+
 degrees_plural = dict()
 degrees_plural["duke"] = "dukes"
 degrees_plural["marquess"] = "marquess"

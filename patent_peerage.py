@@ -28,6 +28,7 @@ class Patent_Peerage:
     self.third_invocation = self.get_third_invocation()
     self.remainder = self.get_remainder(remainder)
     self.rights_clause = self.get_rights_clause()
+    self.degree_clause = self.get_degree_clause()
     self.degree_plural = self.get_degree_plural()
 
   # Looks up the result in "constants.py".
@@ -136,6 +137,10 @@ class Patent_Peerage:
       return constants.rights_clauses["baronet"]
     else:
       return constants.rights_clauses["peer"]
+
+  # Looks up the result in "constants.py".
+  def get_degree_clause(self):
+    return constants.degree_clauses[self.degree]
 
   # Looks up the result in "constants.py".
   def get_degree_plural(self):
