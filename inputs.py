@@ -6,7 +6,7 @@
 
 # "peerage" indicates a patent granting a peerage or baronetage. "other"
 # indicates a miscelleneous type of patent.
-patent_type = "other"
+patent_type = "peerage"
 
 ramno = 1731
 
