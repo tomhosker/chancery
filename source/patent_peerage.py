@@ -5,6 +5,7 @@ peerage.
 
 # Standard imports.
 from dataclasses import dataclass
+from pathlib import Path
 from typing import ClassVar
 
 # Local imports.
@@ -29,6 +30,8 @@ PEERAGE_RANKS = (BARON, VISCOUNT, EARL, MARQUESS, DUKE)
 class PatentPeerage(Patent):
     """ The class in question. """
     # Class variables.
+    PATH_TO_BASE: ClassVar[str] = \
+        str(Path(__file__).parent/"tex"/"base_peerage.tex")
     ADVANCE_CLAUSES: ClassVar[dict] = {
         **dict.fromkeys(PEERAGE_RANKS, "advance, create and prefer"),
         BARONET: "erect, appoint and create"
@@ -127,16 +130,17 @@ class PatentPeerage(Patent):
     }
     GRANTEE_MARKER: ClassVar[str] = "#GRANTEE"
     TITLE_MARKER: ClassVar[str] = "#TITLE"
-    SUBSIDIARY_TITLES_MARKER: ClassVar[str] = "#SUBSIDIART_TITLES"
+    SUBSIDIARY_TITLES_MARKER: ClassVar[str] = "#SUBSIDIARY_TITLES"
     WHEREAS_MARKER: ClassVar[str] = "#WHEREAS"
     PRONOUN_NOMINATIVE_MARKER: ClassVar[str] = "#PRONOUN_NOMINATIVE"
     PRONOUN_DATIVE_MARKER: ClassVar[str] = "#PRONOUN_DATIVE"
     PRONOUN_POSSESSIVE_MARKER: ClassVar[str] = "#PRONOUN_POSSESSIVE"
     ADVANCE_CLAUSE_MARKER: ClassVar[str] = "#ADVANCE_CLAUSE"
     TRUSTY_CLAUSE_MARKER: ClassVar[str] = "#TRUSTY_CLAUSE"
+    STATE_CLAUSE_MARKER: ClassVar[str] = "#STATE_CLAUSE"
     DIGNIFY_CLAUSE_MARKER: ClassVar[str] = "#DIGNIFY_CLAUSE"
     THIRD_INVOCATION_MARKER: ClassVar[str] = "#THIRD_INVOCATION"
-    REMAINDER_MARKER: ClassVar[str] = "#REMAINDER_MARKER"
+    REMAINDER_MARKER: ClassVar[str] = "#REMAINDER"
     RIGHTS_CLAUSE_MARKER: ClassVar[str] = "#RIGHTS_CLAUSE"
     DEGREE_CLAUSE_MARKER: ClassVar[str] = "#DEGREE_CLAUSE"
     DEGREE_PLURAL_MARKER: ClassVar[str] = "#DEGREE_PLURAL"
@@ -147,6 +151,7 @@ class PatentPeerage(Patent):
     degree: str = None
     title: str = None
     subsidiary_titles: list = None
+    subsidiary_titles_str: str = None
     whereas: str = None
     pronoun_nominative: str = None
     pronoun_dative: str = None
@@ -161,13 +166,15 @@ class PatentPeerage(Patent):
     degree_plural: str = None
 
     def __post_init__(self):
-        super().__post_init__(self)
+        super().__post_init__()
+        self.subsidiary_titles_str = self.get_subsidiary_titles_str()
         self.whereas = self.get_whereas()
         self.pronoun_nominative = self.PRONOUNS_NOMINATIVE[self.gender]
         self.pronoun_dative = self.PRONOUNS_DATIVE[self.gender]
         self.pronoun_possessive = self.PRONOUNS_POSSESSIVE[self.gender]
         self.advance_clause = self.ADVANCE_CLAUSES[self.degree]
         self.trusty_clause = self.TRUSTY_CLAUSES[self.degree]
+        self.state_clause = self.STATE_CLAUSES[self.degree]
         self.dignify_clause = self.get_dignify_clause()
         self.third_invocation = self.get_third_invocation()
         self.remainder = self.get_remainder()
@@ -177,9 +184,18 @@ class PatentPeerage(Patent):
 
     def get_whereas(self):
         """ Add an hspace, if necessary. """
-        if self.whereas:
-            result = "\hspace{20pt} "+self.whereas
-        return result
+        result = self.whereas
+        if result:
+            result = "\hspace{20pt} "+result
+            return result
+        return ""
+
+    def get_subsidiary_titles_str(self):
+        """ Change the list into an injectable string. """
+        if self.subsidiary_titles:
+            result = ", ".join(self.subsidiary_titles)
+            return result
+        return ""
 
     def get_dignify_clause(self):
         """ Looks up the result. """
@@ -220,13 +236,14 @@ class PatentPeerage(Patent):
             (self.YEAR_ORDSTR_MARKER, self.year_ordstr),
             (self.GRANTEE_MARKER, self.grantee),
             (self.TITLE_MARKER, self.title),
-            (self.SUBSIDIARY_TITLES_MARKER, ", ".join(self.subsidiary_titles)),
+            (self.SUBSIDIARY_TITLES_MARKER, self.subsidiary_titles_str),
             (self.WHEREAS_MARKER, self.whereas),
             (self.PRONOUN_NOMINATIVE_MARKER, self.pronoun_nominative),
             (self.PRONOUN_DATIVE_MARKER, self.pronoun_dative),
             (self.PRONOUN_POSSESSIVE_MARKER, self.pronoun_possessive),
             (self.ADVANCE_CLAUSE_MARKER, self.advance_clause),
             (self.TRUSTY_CLAUSE_MARKER, self.trusty_clause),
+            (self.STATE_CLAUSE_MARKER, self.state_clause),
             (self.DIGNIFY_CLAUSE_MARKER, self.dignify_clause),
             (self.THIRD_INVOCATION_MARKER, self.third_invocation),
             (self.REMAINDER_MARKER, self.remainder),

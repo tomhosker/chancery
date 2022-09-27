@@ -1,0 +1,36 @@
+#!/bin/python3
+
+"""
+This code defines a script which generates a letters patent given an input file.
+"""
+
+# Standard imports.
+import argparse
+
+# Bespoke imports.
+from chancery import MachineInterface
+
+#############
+# FUNCTIONS #
+#############
+
+def make_parser():
+    """ Make the parser object. """
+    desc_str = "Generate a letters patent from a specified input file."
+    result = argparse.ArgumentParser(description=desc_str)
+    result.add_argument("path_to_input", help="The path to the input file")
+    return result
+
+###################
+# RUN AND WRAP UP #
+###################
+
+def run():
+    """ Run this file. """
+    parser = make_parser()
+    arguments = parser.parse_args()
+    interface = MachineInterface(arguments.path_to_input)
+    interface.generate()
+
+if __name__ == "__main__":
+    run()

@@ -1,0 +1,14 @@
+{
+    "type": "peerage",
+    "ramno": 0,
+    "day_num": 1,
+    "month_num": 1,
+    "year_num": 1,
+    "grantee": "Joseph Bloggs",
+    "gender": "male",
+    "degree": "viscount",
+    "title": "Viscount Bloggs",
+    "subsidiary_titles": null,
+    "whereas": null,
+    "remainder": "heirs-male"
+}
