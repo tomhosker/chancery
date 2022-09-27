@@ -186,7 +186,7 @@ class PatentPeerage(Patent):
         """ Add an hspace, if necessary. """
         result = self.whereas
         if result:
-            result = "\hspace{20pt} "+result
+            result = "\\hspace{20pt} "+result
             return result
         return ""
 

@@ -19,7 +19,7 @@ class MachineInterface:
     # Class attributes.
     PATENT_TYPE_KEY = "type"
     PEERAGE_TYPE = "peerage"
-    
+
     def __init__(self, path_to_input_file):
         self.path_to_input_file = path_to_input_file
         self.patent_obj = self.make_patent_object()
